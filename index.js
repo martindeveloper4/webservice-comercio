@@ -36,6 +36,8 @@ app.use((req, res, next) => {
 
 /* RUTAS DE ACCESO A LOS SERVICIOS */
 app.post('/api/paquetes',paqueteCtrl.getPaquetes);
+app.post('/api/descuentos',descuentoCtrl.getDescuentos);
+app.get('/api/paquetes',paqueteCtrl.getPaquetes);
 app.get('/api/descuentos',descuentoCtrl.getDescuentos);
 
 
