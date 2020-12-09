@@ -1,22 +1,34 @@
 'use strict'
 const con = require('../conexion/conexion');
+var Freshdesk = require('freshdesk-api');
+var freshdesk = new Freshdesk('https://newaccount1607357966352.freshdesk.com', 'jXAJKBYPAW8cOmqu1gL');
+/*
+ CONSULTAS 
+SP-04 --> Consulta Informativa General de Paquete
+SP-07 --> Consulta Monto de Pago
+SP-08 --> Consulta de Fecha de Renovacion de Pago
+SP-11 --> Consulta de Pago Cancelado
+*/
+
 
 // Consumo de la API de FRESHDESK con su APIKEY, para generar ticket
-//var Freshdesk = require('freshdesk-api');
-//var freshdesk = new Freshdesk('https://newaccount1607357966352.freshdesk.com', 'jXAJKBYPAW8cOmqu1gL');
-
 
 // SERVICIO DE CONSULTA INFORMATIVA GENERAL DE PAQUETE DEL SUSCRIPTOR
-function getPaquetes(req,res){
+function getPaquetes(req,res){    
 
     /**
      * Consulta a la base de datos de la tabla SUSCRIPCION
-     */
-     
+    */
+
     let dni = req.body.dni;
 
+    //let id_grupo = req.body.id_grupo;
+    
+    //let correo = req.body.correo;
+    //let nombre = req.body.nombre;
+
     var sql_paquete = "SELECT ";
-    sql_paquete+="sus.idcliente, ";
+    sql_paquete+="sus.id, ";
     sql_paquete+="sus.producto, ";
     sql_paquete+="sus.pagomensual, ";
     sql_paquete+="sus.periodo, ";
@@ -26,16 +38,20 @@ function getPaquetes(req,res){
     sql_paquete+="cli.nombre ";
     sql_paquete+="FROM suscripcion sus ";
     sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-    sql_paquete+="WHERE sus.id_grupo=3  and  cli.nrodni="+dni ;
+    sql_paquete+="WHERE sus.id_grupo=3 and  cli.nrodni="+dni;
+    //sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
+    //sql_paquete+="WHERE sus.id_grupo=" + id_grupo + " and  cli.nrodni="+dni;
 
     
     //Ejecucion de la consulta y respuesta de la consulta de la tabla suscripcion.
     con.query(sql_paquete, function (err, paquetes, field) {
         if (err) return res.status(500).send({message:err})
-        res.status(200).send({data:paquetes});
+        res.status(200).json({
+            data:paquetes
+        });
     });
 
-
+    
     // Insercion de datos en la tabla tipificacion, que usara el bot
     var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + dni +"','Consulta Informativa de Paquete','LLAMADAS INFORMATIVAS','0', '', 'CONSULTAS','CONSULTAS DE FACTURACION')";
         con.query(sql, function (err, result) {
@@ -43,11 +59,11 @@ function getPaquetes(req,res){
         console.log("1 record inserted");
     });
     
-/*
+
     // Creacion de Ticket en Freshdesk cuando se use el servicio consulta informativa general del Paquete
     freshdesk.createTicket({
-        name: nombre,
-        email: correo,
+        name: 'martin',
+        email: 'martin@gmail.com',
         subject: 'CONSULTA',
         description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
         status: 2,
@@ -55,7 +71,7 @@ function getPaquetes(req,res){
     }, function (err, data) {
         console.log(err || data)
     })
-*/
+
 }
 
 
