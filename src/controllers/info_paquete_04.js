@@ -20,8 +20,8 @@ function getPaquetes(req,res){
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
 
-    let dni = req.body.dni;
-
+    var dni = String(req.body.dni);
+ 
     //let id_grupo = req.body.id_grupo;
     
     //let correo = req.body.correo;
@@ -38,7 +38,7 @@ function getPaquetes(req,res){
     sql_paquete+="cli.nombre ";
     sql_paquete+="FROM suscripcion sus ";
     sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-    sql_paquete+="WHERE sus.id_grupo=3 and  cli.nrodni="+dni;
+    sql_paquete+="WHERE sus.id_grupo=1 and  cli.nrodni="+dni;
     //sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
     //sql_paquete+="WHERE sus.id_grupo=" + id_grupo + " and  cli.nrodni="+dni;
 
@@ -49,14 +49,16 @@ function getPaquetes(req,res){
         res.status(200).json({
             data:paquetes
         });
+        //console.log(paquetes);
     });
 
-    
+
     // Insercion de datos en la tabla tipificacion, que usara el bot
     var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + dni +"','Consulta Informativa de Paquete','LLAMADAS INFORMATIVAS','0', '', 'CONSULTAS','CONSULTAS DE FACTURACION')";
         con.query(sql, function (err, result) {
         if (err) throw err;
-        console.log("1 record inserted");
+        
+        //console.log("1 record inserted " + dni);
     });
     
 
@@ -69,7 +71,7 @@ function getPaquetes(req,res){
         status: 2,
         priority: 1
     }, function (err, data) {
-        console.log(err || data)
+        //console.log(err || data)
     })
 
 }
