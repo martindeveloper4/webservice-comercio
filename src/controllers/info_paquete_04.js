@@ -20,7 +20,7 @@ function getPaquetes(req,res){
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
 
-    var dni = String(req.body.dni);
+    var dni = req.body.dni;
  
     //let id_grupo = req.body.id_grupo;
     
