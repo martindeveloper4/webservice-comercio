@@ -20,60 +20,85 @@ function getPaquetes(req,res){
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
 
-    var dni = req.body.dni;
- 
-    //let id_grupo = req.body.id_grupo;
-    
-    //let correo = req.body.correo;
-    //let nombre = req.body.nombre;
 
-    var sql_paquete = "SELECT ";
-    sql_paquete+="sus.id, ";
-    sql_paquete+="sus.producto, ";
-    sql_paquete+="sus.pagomensual, ";
-    sql_paquete+="sus.periodo, ";
-    sql_paquete+="sus.diasentregadiario, ";
-    sql_paquete+="sus.estado, ";
-    sql_paquete+="sus.id_grupo, ";
-    sql_paquete+="cli.nombre ";
-    sql_paquete+="FROM suscripcion sus ";
-    sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-    sql_paquete+="WHERE sus.id_grupo=1 and  cli.nrodni="+dni;
-    //sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-    //sql_paquete+="WHERE sus.id_grupo=" + id_grupo + " and  cli.nrodni="+dni;
+    var nrodoc =  req.body.dni;
+   
+    if (nrodoc.length == 8) {
+        var nrodocument =  nrodoc;
+        console.log(nrodocument);
 
-    
-    //Ejecucion de la consulta y respuesta de la consulta de la tabla suscripcion.
-    con.query(sql_paquete, function (err, paquetes, field) {
+
+        var sql_paquete = "SELECT ";
+        sql_paquete+="sus.id, ";
+        sql_paquete+="sus.producto, ";
+        sql_paquete+="sus.pagomensual, ";
+        sql_paquete+="sus.periodo, ";
+        sql_paquete+="sus.diasentregadiario, ";
+        sql_paquete+="sus.estado, ";
+        sql_paquete+="sus.id_grupo, ";
+        sql_paquete+="cli.nombre ";
+        sql_paquete+="FROM suscripcion sus ";
+        sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
+        sql_paquete+="WHERE sus.id_grupo=1 and  cli.nrodni="+nrodocument;
+
+
+        //Ejecucion de la consulta y respuesta de la consulta de la tabla suscripcion.
+        con.query(sql_paquete, function (err, paquetes, field) {
         if (err) return res.status(500).send({message:err})
-        res.status(200).json({
-            data:paquetes
+            res.status(200).json({
+                data:paquetes
+            });
+            //console.log(paquetes);
         });
-        //console.log(paquetes);
-    });
 
-
-    // Insercion de datos en la tabla tipificacion, que usara el bot
-    var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + dni +"','Consulta Informativa de Paquete','LLAMADAS INFORMATIVAS','0', '', 'CONSULTAS','CONSULTAS DE FACTURACION')";
-        con.query(sql, function (err, result) {
-        if (err) throw err;
+        // Insercion de datos en la tabla tipificacion, que usara el bot
+        var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + nrodocument +"','Consulta Informativa de Paquete','LLAMADAS INFORMATIVAS','0', '', 'CONSULTAS','CONSULTAS DE FACTURACION')";
+            con.query(sql, function (err, result) {
+            if (err) throw err;
+            
+            //console.log("1 record inserted " + dni);
+        });
         
-        //console.log("1 record inserted " + dni);
-    });
+
+        // Creacion de Ticket en Freshdesk cuando se use el servicio consulta informativa general del Paquete
+        freshdesk.createTicket({
+            name: 'martin',
+            email: 'martin@gmail.com',
+            subject: 'CONSULTA',
+            description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
+            status: 2,
+            priority: 1
+        }, function (err, data) {
+            //console.log(err || data)
+        })
+
+
+        return false;
+
+
+    } else if (nrodoc.length == 11) {
+        var nrodocument =  nrodoc;
+        console.log(nrodocument);
+        res.status(200).json({
+            data: 'Ingreso el numero de documento de RUC'
+        });
+        return false;
+    } else if (nrodoc.length == 9 ) {
+        var nrodocument =  nrodoc;
+        console.log(nrodocument);
+        res.status(200).json({
+            data: 'Ingreso el numero de documento de Extranjeria'
+        });
+        return false;
+    } else {
+        res.status(200).json({
+            data: 'Ingrese una identificacion verdadera'
+        });
+    }
+
+
+
     
-
-    // Creacion de Ticket en Freshdesk cuando se use el servicio consulta informativa general del Paquete
-    freshdesk.createTicket({
-        name: 'martin',
-        email: 'martin@gmail.com',
-        subject: 'CONSULTA',
-        description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
-        status: 2,
-        priority: 1
-    }, function (err, data) {
-        //console.log(err || data)
-    })
-
 }
 
 
