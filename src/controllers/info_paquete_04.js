@@ -52,7 +52,7 @@ function getPaquetes(req,res){
         });
 
         // Insercion de datos en la tabla tipificacion, que usara el bot
-        var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + nrodocument +"','Consulta periodo, dias de reparto, direccion','LLAMADAS INFORMATIVAS','0', '400274', 'CONSULTAS','CONSULTAS DE FACTURACION')";
+        var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + nrodocument +"','Consulta periodo, dias de reparto, direccion','LLAMADAS INFORMATIVAS','0', '400274', 'CONSULTAS','CONSULTA DE FACTURACION')";
             con.query(sql, function (err, result) {
             if (err) throw err;
             
