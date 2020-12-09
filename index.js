@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 
 
 /* RUTAS DE ACCESO A LOS SERVICIOS */
-app.get('/api/paquetes',paqueteCtrl.getPaquetes);
+app.post('/api/paquetes',paqueteCtrl.getPaquetes);
 
 
 
