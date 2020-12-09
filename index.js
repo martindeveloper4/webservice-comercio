@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
 
-const paqueteCtrl = require('./controllers/info_paquete_03');
+const paqueteCtrl = require('./src/controllers/info_paquete_03');
 
 
 
