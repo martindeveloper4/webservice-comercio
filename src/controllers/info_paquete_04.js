@@ -70,13 +70,12 @@ function getPaquetes(req,res){
                     //console.log(err || data)
                 })
 
-                return false;
             }else{
                 res.json({
                     message: 'Cliente no encontrado',
                     code: '0'
                 });
-                return false;
+                
             }
 
 
