@@ -11,6 +11,8 @@ function getDescuentos(req,res){
 	
     let dni = req.body.dni;
 
+    
+
 
 	var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + dni +"','Consulta de Descuento o Promociones','CLUB DEL SUSCRIPTOR','0', '', 'CONSULTAS','TIENDA CLUB')";
         con.query(sql, function (err, result) {
@@ -18,11 +20,12 @@ function getDescuentos(req,res){
         console.log("1 record inserted");
     });
 
+
 	freshdesk.createTicket({
         name: 'Martin',
         email: 'Martin@gmail.com',
         subject: 'CONSULTA',
-        description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
+        description: 'CONSULTA DESCUENTOS Y PROMOCIONES',
         status: 2,
         priority: 1
     }, function (err, data) {

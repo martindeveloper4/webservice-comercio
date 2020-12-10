@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 
 const paqueteCtrl = require('./src/controllers/info_paquete_04');
 const descuentoCtrl = require('./src/controllers/info_descuento_03');
+const beneficiarioCtrl = require('./src/controllers/ingreso_beneficiario_17');
 
 
 
@@ -37,8 +38,14 @@ app.use((req, res, next) => {
 /* RUTAS DE ACCESO A LOS SERVICIOS */
 app.post('/api/paquetes',paqueteCtrl.getPaquetes);
 app.post('/api/descuentos',descuentoCtrl.getDescuentos);
+app.post('/api/beneficiario',beneficiarioCtrl.getBeneficiario);
+
+
 app.get('/api/paquetes',paqueteCtrl.getPaquetes);
 app.get('/api/descuentos',descuentoCtrl.getDescuentos);
+app.get('/api/beneficiario',beneficiarioCtrl.getBeneficiario);
+
+
 
 
 
