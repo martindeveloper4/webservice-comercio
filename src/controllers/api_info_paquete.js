@@ -19,7 +19,7 @@ function getPaquetes(req,res){
     */
     var tipo_doc = req.body.tipo_documento;
     var nrodoc =  req.body.dni;
-    var nro_grup = req.body.nro_grupo;
+    var tip_suscripcion = req.body.tipo_suscripcion;
 
 
     if (tipo_doc == 1) {
@@ -39,7 +39,7 @@ function getPaquetes(req,res){
         sql_paquete+="cli.correo ";
         sql_paquete+="FROM suscripcion sus ";
         sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-        sql_paquete+="WHERE sus.id_grupo="+ nro_grup +" AND cli.nrodni="+nrodoc;
+        sql_paquete+="WHERE sus.id_grupo="+ tip_suscripcion +" AND cli.nrodni="+nrodoc;
         
 
         con.query(sql_paquete, function (err, paquetes, field) {
@@ -57,7 +57,17 @@ function getPaquetes(req,res){
                     data: paquetes.rows
                 });
 
-                var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + nrodoc +"','Consulta periodo, dias de reparto, direccion','LLAMADAS INFORMATIVAS','0', '400274', 'CONSULTAS','CONSULTA DE FACTURACION')";
+                var dnis = paquetes.rows[0]['nrodni'];
+                console.log(dnis);
+                var nombre = paquetes.rows[0]['nombre'];
+                console.log(nombre);
+                var nrodelivery = paquetes.rows[0]['nrodelivery'];
+                console.log(nrodelivery);
+                var correo = paquetes.rows[0]['correo'];
+                console.log(correo);
+
+                
+                var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + dnis +"','Consulta periodo, dias de reparto, direccion','LLAMADAS INFORMATIVAS','0', '"+ nrodelivery +"', 'CONSULTAS','CONSULTA DE FACTURACION')";
                 con.query(sql, function (err, result) {
                     if (err) throw err;
                     
@@ -66,8 +76,8 @@ function getPaquetes(req,res){
 
                 // Creacion de Ticket en Freshdesk cuando se use el servicio consulta informativa general del Paquete
                 freshdesk.createTicket({
-                    name: 'Martin Luque',
-                    email: 'martin@gmail.com',
+                    name: nombre,
+                    email: correo,
                     subject: 'CONSULTA',
                     description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
                     status: 2,
