@@ -41,41 +41,20 @@ function getPaquetes(req,res){
         sql_paquete+="WHERE cli.nrodni="+nrodoc;
 
         con.query(sql_paquete, function (err, paquetes, field) {
-            
-        
-            if(paquetes.rows){
-                if (err) return res.status(500).send({message:err})
+            console.log(paquetes.rowCount);
+            if(paquetes.rowCount == 0 ){
                 res.status(200).json({
-                    message: 'Cliente Encontrado',
-                    code: '1'
-                });
-
-                // Insercion de datos en la tabla tipificacion, que usara el bot
-                var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + nrodoc +"','Consulta periodo, dias de reparto, direccion','LLAMADAS INFORMATIVAS','0', '400274', 'CONSULTAS','CONSULTA DE FACTURACION')";
-                con.query(sql, function (err, result) {
-                    if (err) throw err;
-                    
-                    //console.log("1 record inserted " + dni);
-                });
-
-                // Creacion de Ticket en Freshdesk cuando se use el servicio consulta informativa general del Paquete
-                freshdesk.createTicket({
-                    name: 'Hola',
-                    email: 'martin@gmail.com',
-                    subject: 'CONSULTA',
-                    description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
-                    status: 2,
-                    priority: 1
-                }, function (err, data) {
-                    //console.log(err || data)
-                })
-
-            }else{
-                res.json({
                     message: 'Cliente no encontrado',
                     code: '0'
                 });
                 
+
+            }
+            if(paquetes.rowCount == 1 ){
+                res.status(200).json({
+                    message: 'Cliente  Encontrado',
+                    code: '1'
+                });
             }
 
 
