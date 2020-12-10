@@ -46,8 +46,7 @@ function getPaquetes(req,res){
             if(paquetes.rows){
                 if (err) return res.status(500).send({message:err})
                 res.status(200).json({
-                    message: 'Se encontro al cliente',
-                    code: '1'
+                    data:paquetes.rows
                 });
 
                 // Insercion de datos en la tabla tipificacion, que usara el bot
