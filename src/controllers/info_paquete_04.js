@@ -19,7 +19,6 @@ function getPaquetes(req,res){
     */
     var nrodoc =  req.body.dni;
     var tipo_doc = req.body.tipo_documento;
-    var nro_grup = req.body.nro_grupo;
 
 
     if (tipo_doc == 1) {
@@ -39,7 +38,7 @@ function getPaquetes(req,res){
         sql_paquete+="cli.correo ";
         sql_paquete+="FROM suscripcion sus ";
         sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-        sql_paquete+="WHERE sus.id_grupo="+ nro_grup +" and  cli.nrodni="+nrodoc;
+        sql_paquete+="WHERE cli.nrodni="+nrodoc;
 
         con.query(sql_paquete, function (err, paquetes, field) {
             
@@ -100,7 +99,7 @@ function getPaquetes(req,res){
         sql_paquete+="cli.correo ";
         sql_paquete+="FROM suscripcion sus ";
         sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-        sql_paquete+="WHERE sus.id_grupo="+ nro_grup +" and  cli.nrocarnetextranjera="+nrodoc;
+        sql_paquete+="WHERE cli.nrocarnetextranjera="+nrodoc;
 
         con.query(sql_paquete, function (err, paquetes, field) {
             
@@ -158,7 +157,7 @@ function getPaquetes(req,res){
         sql_paquete+="cli.correo ";
         sql_paquete+="FROM suscripcion sus ";
         sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-        sql_paquete+="WHERE sus.id_grupo="+ nro_grup +" and  cli.nroruc="+nrodoc;
+        sql_paquete+="WHERE cli.nroruc="+nrodoc;
 
         con.query(sql_paquete, function (err, paquetes, field) {
             
@@ -175,7 +174,7 @@ function getPaquetes(req,res){
                     
                     //console.log("1 record inserted " + dni);
                 });
-                
+
                 // Creacion de Ticket en Freshdesk cuando se use el servicio consulta informativa general del Paquete
                 freshdesk.createTicket({
                     name: 'Martin Luque',
