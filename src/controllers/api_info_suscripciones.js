@@ -17,20 +17,20 @@ function getListaSuscripciones(req,res){
         sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria+ " AND cli.nrodni="+nro_document;
         
         
-
         con.query(sql_suscripcion, function (err, suscripciones, field) {
-            console.log(suscripciones.rowCount);
-            if(suscripciones.rowCount == 0 ){
+
+            if(suscripciones){
+                
+                res.status(200).json({
+                    data: suscripciones
+                });
+        
+
+            }else{
+           
                 res.status(200).json({
                     message: 'No tiene ninguna suscripcion'
   
-                });
-                
-
-            }
-            if(suscripciones.rowCount == 1 ){
-                res.status(200).json({
-                    data: suscripciones.rows
                 });
             }
         });
