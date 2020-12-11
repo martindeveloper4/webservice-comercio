@@ -72,19 +72,32 @@ getSuscripcion = (req, res) => {
       }
     });
 
-  con.query(sql_suscripcion, function (err, arr, field) {
-    let suscripciones = arr.rows;
 
-    if (suscripciones.length == 0) {
-      res.status(200).json({
-        message: "No Tiene suscripcion",
-        code: "0",
-      });
-    } else {
-      res.status(200).json({
-        message: suscripciones[0],
-        code: "1",
-      });
+
+
+  con.query(sql_suscripcion, function (err, arr, field) {
+    try{
+
+      if (err) throw err;
+
+      let suscripciones = arr.rows;
+      newTipificacion(1);
+      if (suscripciones.length == 0) {
+        res.status(200).json({
+          message: "No Tiene suscripcion",
+          code: "0",
+        });
+      } else {
+        res.status(200).json({
+          message: suscripciones[0],
+          code: "1",
+        });
+      }
+    }catch(e){
+      res.status(500).json({
+        message:e.message,
+        code:"0"
+      })
     }
   });
 };
@@ -121,7 +134,9 @@ validarEstadoSuscripcion = (req, res) => {
     });
 
   con.query(sql_suscripcion, function (err, arr, field) {
+
     let suscripciones = arr.rows;
+    newTipificacion(2);
 
     if (suscripciones.length == 0) {
       res.status(200).json({
@@ -136,6 +151,24 @@ validarEstadoSuscripcion = (req, res) => {
     }
   });
 };
+
+newTipificacion = (type)=>{
+
+  let numeroDocuemento = '43979441';
+  let nrodelivery = '486061';
+
+  if(type==1){
+    var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + numeroDocuemento +"','Consulta periodo, dias de reparto, direccion','LLAMADAS INFORMATIVAS','0', '"+ nrodelivery +"', 'CONSULTAS','CONSULTA DE FACTURACION')";
+    con.query(sql, function (err, result) {
+                      if (err) throw err;
+              });
+  }else{
+    var sql = "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" + numeroDocuemento +"','Consulta periodo, dias de reparto, direccion','CLUB DEL SUSCRIPTOR','0', '"+ nrodelivery +"', 'CONSULTAS','TIENDA CLUB')";
+    con.query(sql, function (err, result) {
+                      if (err) throw err;
+            });
+  }
+}
 
 module.exports = {
   getSuscripciones,
