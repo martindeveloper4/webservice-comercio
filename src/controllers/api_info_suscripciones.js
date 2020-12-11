@@ -3,10 +3,14 @@ const con = require('../conexion/conexion');
 
 
 function getListaSuscripciones(req,res){
- 
         var nro_document =  req.body.nro_documento;
-        var subcategory = req.body.subcategoria; 
+        console.log(nro_document);
+        var id_subcategoria = req.body.subcategoria;
+        console.log(id_subcategoria);
+        var id_subcategoria_one =  Number(id_subcategoria);
+        console.log(id_subcategoria_one);
 
+        
         if (nro_document.length == 8) {
 
             var sql_suscripcion = "SELECT ";
@@ -15,7 +19,7 @@ function getListaSuscripciones(req,res){
             sql_suscripcion+="sus.periodo ";
             sql_suscripcion+="FROM suscripcion sus ";
             sql_suscripcion+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-            sql_suscripcion+="WHERE sus.id_subcategoria=" +subcategory+ " AND cli.nrodni="+nro_document;
+            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria_one+ " AND cli.nrodni="+nro_document;
             
             
             con.query(sql_suscripcion, function (err, suscripciones, field) {
@@ -47,7 +51,7 @@ function getListaSuscripciones(req,res){
             sql_suscripcion+="sus.periodo ";
             sql_suscripcion+="FROM suscripcion sus ";
             sql_suscripcion+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-            sql_suscripcion+="WHERE sus.id_subcategoria=" +subcategory+ " AND cli.nrocarnetextranjeria="+nro_document;
+            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria_one+ " AND cli.nrocarnetextranjeria="+nro_document;
             
             
             con.query(sql_suscripcion, function (err, suscripciones, field) {
@@ -79,7 +83,7 @@ function getListaSuscripciones(req,res){
             sql_suscripcion+="sus.periodo ";
             sql_suscripcion+="FROM suscripcion sus ";
             sql_suscripcion+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-            sql_suscripcion+="WHERE sus.id_subcategoria=" +subcategory+ " AND cli.nroruc="+nro_document;
+            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria_one+ " AND cli.nroruc="+nro_document;
             
             
             con.query(sql_suscripcion, function (err, suscripciones, field) {
