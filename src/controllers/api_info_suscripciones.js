@@ -26,7 +26,7 @@ function getListaSuscripciones(req,res){
         
 
         
-        if (id_subcategoria == 1) {
+        if (id_subcategoria == '1') {
 
             var sql_suscripcion = "SELECT ";
             sql_suscripcion+="sus.id_suscripcion, ";
