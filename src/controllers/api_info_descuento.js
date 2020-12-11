@@ -18,7 +18,7 @@ function getDescuento(req,res){
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
 
-    var nro_document = req.body.nro_documento;
+    var nro_document = req.body.nro_documento  ||  req.query.nro_documento;
 
     if (nro_document.length == 8) {
 
@@ -35,7 +35,6 @@ function getDescuento(req,res){
             console.log(cliente.rowCount);
             if(cliente.rowCount == 0 ){
                 res.status(200).json({
-                    message: 'Hola '+cliente.rows[0]['nombre']+' hemos detectado que eres suscriptor pero tienes deuda',
                     code: '0'
                 });
                 
@@ -43,7 +42,6 @@ function getDescuento(req,res){
             }
             if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    message: 'Felicitaciones '+ cliente.rows[0]['nombre'] +' <br> Puedes acceder a los siguientes descuentos link: <br> Clubelcomercio.com.pe ',
                     code: '1'
                 });
 
@@ -70,7 +68,7 @@ function getDescuento(req,res){
                     email: correo,
                     subject: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
                     description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
-                    status: 0,
+                    status: 2,
                     priority: 1
                 }, function (err, data) {
                     //console.log(err || data)
@@ -130,7 +128,7 @@ function getDescuento(req,res){
                     email: correo,
                     subject: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
                     description: 'CONSULTA DESCUENTOS Y PROMOCIONES',
-                    status: 0,
+                    status: 2,
                     priority: 1
                 }, function (err, data) {
                     //console.log(err || data)
@@ -164,7 +162,8 @@ function getDescuento(req,res){
             }
             if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    message: 'Puede ver sus descuento de suscriptor en el siguiente link: '
+                    message: 'Puede ver sus descuento de suscriptor en el siguiente link:',
+                    code: '1'
                 });
 
                 var nroruc = cliente.rows[0]['nroruc'];
@@ -190,7 +189,7 @@ function getDescuento(req,res){
                     email: correo,
                     subject: 'CONSULTA DESCUENTOS Y PROMOCIONESE',
                     description: 'CONSULTA DESCUENTOS Y PROMOCIONES',
-                    status: 0,
+                    status: 2,
                     priority: 1
                 }, function (err, data) {
                     //console.log(err || data)
