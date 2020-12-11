@@ -6,17 +6,8 @@ function getListaSuscripciones(req,res){
 
 
         console.log(req.body);
-
+        var id_subcategoria = req.body.subcategoria;
         let nro_document =  req.body.nro_documento;
-
-
-        //let nro_doc = parseInt(nro_document);
-        //console.log(nro_document);
-        //console.log(typeof nro_document);
-        //console.log(nro_document);
-
-
-        let id_subcategoria = req.body.subcategoria;
 
 
         //let id_subcategory = parseInt(id_subcategoria);
@@ -26,7 +17,7 @@ function getListaSuscripciones(req,res){
         
 
         
-        if (id_subcategoria == '1') {
+        if (id_subcategoria == 1) {
 
             var sql_suscripcion = "SELECT ";
             sql_suscripcion+="sus.id_suscripcion, ";
