@@ -30,7 +30,7 @@ function getListaSuscripciones(req,res){
             }
             if(suscripciones.rowCount == 1 ){
                 res.status(200).json({
-                    data: suscripciones.rows
+                    data: suscripciones
                 });
             }
         });
