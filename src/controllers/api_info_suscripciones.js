@@ -35,9 +35,23 @@ function getListaSuscripciones(req, res) {
         code: "0",
       });
     } else {
+      let len = suscripciones.rows.length;
+      let message = "";
+      let code = "";
+
+      if (len > 0) {
+        for (let i = 0; i < len; i++) {
+          message += `${suscripciones.rows[i].id_suscripcion} > ${suscripciones.rows[i].producto} </br>`;
+        }
+        code = "1";
+      } else {
+        message = "No tiene suscripciones";
+        code = "0";
+      }
+
       res.status(200).json({
-        message: "tiene  suscripcion",
-        code: "1",
+        message,
+        code,
       });
     }
   });
