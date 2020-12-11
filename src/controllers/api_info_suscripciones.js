@@ -15,7 +15,9 @@ function getListaSuscripciones(req, res) {
     "INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
   sql_suscripcion += "WHERE sus.id_subcategoria=" + id_subcategoria;
 
+
   if (parseInt(tipo_document) == 1) {
+
     sql_suscripcion += " AND cli.nrodni=" + nro_document;
   } else if (parseInt(tipo_document) == 2) {
     sql_suscripcion += " AND cli.nrocarnetextranjeria=" + nro_document;

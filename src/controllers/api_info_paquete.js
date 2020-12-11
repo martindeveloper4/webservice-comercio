@@ -2,6 +2,7 @@
 const con = require('../conexion/conexion');
 var Freshdesk = require('freshdesk-api');
 var freshdesk = new Freshdesk('https://newaccount1607623402324.freshdesk.com', 'RMO0bnVkex7LQ1VEfj8x');
+
 /*
 CONSULTAS 
 SP-04 --> Consulta Informativa General de Paquete
@@ -10,22 +11,19 @@ SP-08 --> Consulta de Fecha de Renovacion de Pago
 SP-11 --> Consulta de Pago Cancelado
 */
 
-
 // Consumo de la API de FRESHDESK con su APIKEY, para generar ticket
 // SERVICIO DE CONSULTA INFORMATIVA GENERAL DE PAQUETE DEL SUSCRIPTOR
 function getPaquetes(req,res){    
     /**
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
-
-    
-    var nro_document = req.body.nro_documento;
-    var idsuscriptor = req.body.idsuscripcion;
+    var nro_document = req.body.nro_documento ||  req.query.nro_documento;
+    var idsuscriptor = req.body.idsuscripcion ||  req.query.idsuscripcion;
 
 
     if (nro_document.length == 8) {
-        console.log(nro_document.length);
-        var sql_paquete = "SELECT ";    
+
+        var sql_paquete = "SELECT ";
         sql_paquete+="sus.producto, ";
         sql_paquete+="sus.pagomensual, ";
         sql_paquete+="sus.periodo, ";
@@ -40,7 +38,7 @@ function getPaquetes(req,res){
         sql_paquete+="cli.correo ";
         sql_paquete+="FROM suscripcion sus ";
         sql_paquete+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-        sql_paquete+="WHERE sus.id_suscripcion="+ idsuscriptor +" AND cli.nrodni="+nro_document;
+        sql_paquete+="WHERE sus.id_suscripcion="+idsuscriptor+" AND cli.nrodni="+nro_document;
         
 
         con.query(sql_paquete, function (err, paquetes, field) {
@@ -55,7 +53,15 @@ function getPaquetes(req,res){
             }
             if(paquetes.rowCount == 1 ){
                 res.status(200).json({
-                    data: paquetes.rows
+                    producto: paquetes.rows[0]['producto'],
+                    pagomensual: paquetes.rows[0]['pagomensual'],
+                    periodo: paquetes.rows[0]['periodo'],
+                    diasentregadiario: paquetes.rows[0]['diasentregadiario'],
+                    importepagopendiente: paquetes.rows[0]['importepagopendiente'],
+                    fechasiguienterenovacion: paquetes.rows[0]['fechasiguienterenovacion'],
+                    fechaultimopagocancelado: paquetes.rows[0]['fechaultimopagocancelado'],
+                    importeultimopagocancelado: paquetes.rows[0]['importeultimopagocancelado'],
+                    code:'1'
                 });
 
                 var dnis = paquetes.rows[0]['nrodni'];
@@ -81,7 +87,7 @@ function getPaquetes(req,res){
                     email: correo,
                     subject: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
                     description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
-                    status: 0,
+                    status: 2,
                     priority: 1
                 }, function (err, data) {
                     //console.log(err || data)
@@ -109,7 +115,7 @@ function getPaquetes(req,res){
         sql_paquete+="cli.correo ";
         sql_paquete+="FROM suscripcion sus ";
         sql_paquete+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-        sql_paquete+="WHERE sus.id_suscripcion="+ idsuscriptor +" AND cli.nroruc="+nro_document;
+        sql_paquete+="WHERE sus.id_suscripcion="+ idsuscriptor +" AND cli.nrocarnetextranjeria="+nro_document;
         
 
         con.query(sql_paquete, function (err, paquetes, field) {
@@ -128,7 +134,7 @@ function getPaquetes(req,res){
                 });
 
                 var nrocarnetextranjeria = paquetes.rows[0]['nrocarnetextranjeria'];
-                console.log(nrocarnetextranjeria);
+                console.log(dnis);
                 var nombre = paquetes.rows[0]['nombre'];
                 console.log(nombre);
                 var nrodelivery = paquetes.rows[0]['nrodelivery'];
@@ -219,7 +225,7 @@ function getPaquetes(req,res){
                     email: correo,
                     subject: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
                     description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
-                    status: 0,
+                    status: 2,
                     priority: 1
                 }, function (err, data) {
                     //console.log(err || data)
@@ -232,7 +238,7 @@ function getPaquetes(req,res){
 
     } else {
         res.status(200).json({
-            data: 'El numero de documento identificado no es correcto'
+            data: 'Ingrese una opcion verdadera'
         });
     }
     

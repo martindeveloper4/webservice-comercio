@@ -18,9 +18,10 @@ function getDescuento(req,res){
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
 
-    var nro_document = req.body.nro_documento;
 
-    if (nro_document.length == 8) {
+
+    if (parseInt(nro_document.length) == 8) {
+        var nro_document = req.body.nro_documento  ||  req.query.nro_documento;
 
         var sql_cliente = "SELECT ";    
         sql_cliente+="nrodni, ";
@@ -35,7 +36,6 @@ function getDescuento(req,res){
             console.log(cliente.rowCount);
             if(cliente.rowCount == 0 ){
                 res.status(200).json({
-                    message: 'No cuenta con ningun paquete de suscripcion actualmente',
                     code: '0'
                 });
                 
@@ -43,7 +43,7 @@ function getDescuento(req,res){
             }
             if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    data: cliente.rows
+                    code: '1'
                 });
 
                 var dnis = cliente.rows[0]['nrodni'];
@@ -69,7 +69,7 @@ function getDescuento(req,res){
                     email: correo,
                     subject: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
                     description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
-                    status: 0,
+                    status: 2,
                     priority: 1
                 }, function (err, data) {
                     //console.log(err || data)
@@ -80,8 +80,8 @@ function getDescuento(req,res){
     
         return false;
 
-    } else if (nro_document.length == 9) {
-
+    } else if (parseInt(nro_document.length) == 9) {
+        var nro_document = req.body.nro_documento  ||  req.query.nro_documento;
         var sql_cliente = "SELECT ";    
         sql_cliente+="nrocarnetextranjeria, ";
         sql_cliente+="nombre, ";
@@ -129,7 +129,7 @@ function getDescuento(req,res){
                     email: correo,
                     subject: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
                     description: 'CONSULTA DESCUENTOS Y PROMOCIONES',
-                    status: 0,
+                    status: 2,
                     priority: 1
                 }, function (err, data) {
                     //console.log(err || data)
@@ -140,7 +140,9 @@ function getDescuento(req,res){
     
         return false;
 
-    } else if (nro_document.length == 11) {
+    } else if (parseInt(nro_document.length) == 11) {
+        
+        var nro_document = req.body.nro_documento  ||  req.query.nro_documento;
 
         var sql_cliente = "SELECT ";    
         sql_cliente+="nroruc, ";
@@ -163,7 +165,8 @@ function getDescuento(req,res){
             }
             if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    message: 'Puede ver sus descuento de suscriptor en el siguiente link: '
+                    message: 'Puede ver sus descuento de suscriptor en el siguiente link ',
+                    code: '1'
                 });
 
                 var nroruc = cliente.rows[0]['nroruc'];
@@ -189,7 +192,7 @@ function getDescuento(req,res){
                     email: correo,
                     subject: 'CONSULTA DESCUENTOS Y PROMOCIONESE',
                     description: 'CONSULTA DESCUENTOS Y PROMOCIONES',
-                    status: 0,
+                    status: 2,
                     priority: 1
                 }, function (err, data) {
                     //console.log(err || data)
