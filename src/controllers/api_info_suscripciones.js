@@ -21,6 +21,7 @@ function getListaSuscripciones(req, res) {
     subcategoria: id_subcategoria,
   });
 
+  
   if (tipo_document == 1) {
     sql_suscripcion += " AND cli.nrodni=" + nro_document;
   } else if (tipo_document == 2) {
