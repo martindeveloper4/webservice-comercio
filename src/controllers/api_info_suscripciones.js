@@ -4,7 +4,7 @@ const con = require('../conexion/conexion');
 
 function getListaSuscripciones(req,res){
  
-    var nro_documento =  req.body.nro_documento;
+    var nro_document =  req.body.nro_documento;
     var id_subcategoria = req.body.subcategoria; 
 
 
@@ -14,7 +14,7 @@ function getListaSuscripciones(req,res){
         sql_suscripcion+="sus.periodo ";
         sql_suscripcion+="FROM suscripcion sus ";
         sql_suscripcion+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-        sql_suscripcion+="WHERE sus.id_subcategoria="+ id_subcategoria +" AND cli.nrodni="+nro_documento;
+        sql_suscripcion+="WHERE sus.id_subcategoria="+ id_subcategoria +" AND cli.nrodni="+nro_document;
         
         
 
