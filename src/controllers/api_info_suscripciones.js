@@ -21,14 +21,16 @@ function getListaSuscripciones(req,res){
             console.log(suscripciones.rows);
             if(suscripciones.rowCount == 1){
                 res.status(200).json({
-                    data: suscripciones.rows
+                    data: suscripciones.rows,
+                    code: '1'
                 });
         
             }
 
             if(suscripciones.rowCount == 0){
                 res.status(200).json({
-                    message: 'No tiene ninguna suscripcion'
+                    message: 'No tiene ninguna suscripcion',
+                    code: '0'
                 });
         
             }
