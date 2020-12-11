@@ -23,7 +23,7 @@ function getDescuento(req,res){
         
 
         con.query(sql_cliente, function (err, cliente, field) {
-            console.log(cliente.rows);
+            
             if(cliente.rowCount == 0 ){
                 res.status(200).json({
                     message: 'Cliente no encontrado',
@@ -39,7 +39,7 @@ function getDescuento(req,res){
                 });
 
                 var nrodni = cliente.rows[0]['nrodni'];
-                console.log(dnis);
+                console.log(nrodni);
                 var nombre = cliente.rows[0]['nombre'];
                 console.log(nombre);
                 var nrodelivery = cliente.rows[0]['nrodelivery'];
@@ -99,7 +99,7 @@ function getDescuento(req,res){
                 });
 
                 var nrocarnetextranjeria = cliente.rows[0]['nrocarnetextranjeria'];
-                console.log(dnis);
+                console.log(nrocarnetextranjeria);
                 var nombre = cliente.rows[0]['nombre'];
                 console.log(nombre);
                 var nrodelivery = cliente.rows[0]['nrodelivery'];
@@ -157,7 +157,7 @@ function getDescuento(req,res){
                 });
 
                 var nroruc = cliente.rows[0]['nroruc'];
-                console.log(dnis);
+                console.log(nroruc);
                 var nombre = cliente.rows[0]['nombre'];
                 console.log(nombre);
                 var nrodelivery = cliente.rows[0]['nrodelivery'];
