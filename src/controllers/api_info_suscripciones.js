@@ -15,6 +15,7 @@ function getListaSuscripciones(req, res) {
     "INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
   sql_suscripcion += "WHERE sus.id_subcategoria=" + id_subcategoria;
 
+<<<<<<< HEAD
   return res.status(200).json({
     nro_documento: nro_document,
     tipo_documento: tipo_document,
@@ -23,10 +24,13 @@ function getListaSuscripciones(req, res) {
 
   
   if (tipo_document == 1) {
+=======
+  if (parseInt(tipo_document) == 1) {
+>>>>>>> 8c5a3c9c2affec9b8b1884f711fea2642dcfe9c7
     sql_suscripcion += " AND cli.nrodni=" + nro_document;
-  } else if (tipo_document == 2) {
+  } else if (parseInt(tipo_document) == 2) {
     sql_suscripcion += " AND cli.nrocarnetextranjeria=" + nro_document;
-  } else if (tipo_document == 3) {
+  } else if (parseInt(tipo_document) == 3) {
     sql_suscripcion += " AND cli.nroruc=" + nro_document;
   } else {
     return res.status(200).json({
