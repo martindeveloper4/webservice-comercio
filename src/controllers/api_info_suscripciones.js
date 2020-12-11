@@ -36,7 +36,7 @@ function getListaSuscripciones(req,res){
                 console.log(suscripciones.rows);
                 if(suscripciones.rowCount == 1){
                     res.status(200).json({
-                        data: suscripciones,
+                        message: 'Tiene suscripcion',
                         code: '1'
                     });
             
@@ -50,12 +50,10 @@ function getListaSuscripciones(req,res){
             
                 }
             });
-
-            return false;
     
     } else if (nro_document.length == 9) {
 
-        var sql_suscripcion = "SELECT ";
+            var sql_suscripcion = "SELECT ";
             sql_suscripcion+="sus.id_suscripcion, ";
             sql_suscripcion+="sus.producto, ";
             sql_suscripcion+="sus.periodo ";
@@ -68,7 +66,7 @@ function getListaSuscripciones(req,res){
                 console.log(suscripciones.rows);
                 if(suscripciones.rowCount == 1){
                     res.status(200).json({
-                        data: suscripciones,
+                        message: 'Tiene suscripcion',
                         code: '1'
                     });
             
@@ -76,14 +74,13 @@ function getListaSuscripciones(req,res){
 
                 if(suscripciones.rowCount == 0){
                     res.status(200).json({
-                        message: 'No tiene ninguna suscripcion',
+                        message: 'Tiene suscripcion',
                         code: '0'
                     });
             
                 }
             });
 
-            return false;
 
     } else if (nro_document.length == 11) {
 
@@ -100,7 +97,7 @@ function getListaSuscripciones(req,res){
                 console.log(suscripciones.rows);
                 if(suscripciones.rowCount == 1){
                     res.status(200).json({
-                        data: suscripciones,
+                        message: 'Tiene suscripcion',
                         code: '1'
                     });
             
@@ -115,11 +112,10 @@ function getListaSuscripciones(req,res){
                 }
             });
 
-            return false;
 
     } else {
         res.status(200).json({
-            data: 'El numero de documento identificado no es correcto'
+            message: 'El numero de documento identificado no es correcto'
         });
     }
 
