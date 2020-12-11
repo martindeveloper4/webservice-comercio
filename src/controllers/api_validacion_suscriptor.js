@@ -27,7 +27,7 @@ function getValidacionSuscriptor(req,res){
         
 
         con.query(sql_cliente, function (err, cliente, field) {
-            console.log(cliente);
+            console.log(cliente.rows);
             if(cliente.rowCount == 0 ){
                 res.status(200).json({
                     message: 'Cliente no encontrado',
