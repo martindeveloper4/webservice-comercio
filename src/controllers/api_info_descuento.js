@@ -35,7 +35,7 @@ function getDescuento(req,res){
             console.log(cliente.rowCount);
             if(cliente.rowCount == 0 ){
                 res.status(200).json({
-                    message: 'No cuenta con ningun paquete de suscripcion actualmente',
+                    message: 'Hola '+cliente.rows[0]['nombre']+' hemos detectado que eres suscriptor pero tienes deuda',
                     code: '0'
                 });
                 
@@ -43,7 +43,8 @@ function getDescuento(req,res){
             }
             if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    data: cliente.rows
+                    message: 'Felicitaciones '+ cliente.rows[0]['nombre'] +' <br> Puedes acceder a los siguientes descuentos link: <br> Clubelcomercio.com.pe ',
+                    code: '1'
                 });
 
                 var dnis = cliente.rows[0]['nrodni'];
