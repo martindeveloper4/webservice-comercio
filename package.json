@@ -16,7 +16,8 @@
     "express": "^4.17.1",
     "freshdesk-api": "^2.11.0",
     "morgan": "^1.10.0",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "unirest": "^0.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
