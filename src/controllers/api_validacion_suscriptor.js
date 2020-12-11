@@ -23,18 +23,18 @@ function getValidacionSuscriptor(req,res){
             console.log(cliente.rows);
             if(cliente.rowCount == 0 ){
                 res.status(200).json({
-                    message: 'Cliente no encontrado',
+                    message: 'Clciente no enontrado',
                     code: '0'
                 });
                 
 
-            }
-            if(cliente.rowCount == 1 ){
+            }else if (cliente.rowCount > 0 ){
                 res.status(200).json({
                     message: 'Cliente  Encontrado',
                     code: '1'
                 });
             }
+
         })
 
     
@@ -54,7 +54,7 @@ function getValidacionSuscriptor(req,res){
                 });
             
             }
-            if(cliente.rowCount == 1 ){
+            else if (cliente.rowCount > 0 ){
                 res.status(200).json({
                     message: 'Cliente  Encontrado',
                     code: '1'
@@ -78,7 +78,7 @@ function getValidacionSuscriptor(req,res){
                 
 
             }
-            if(cliente.rowCount == 1 ){
+            else if (cliente.rowCount > 0 ){
                 res.status(200).json({
                     message: 'Cliente  Encontrado',
                     code: '1'

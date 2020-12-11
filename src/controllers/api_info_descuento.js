@@ -23,7 +23,9 @@ function getDescuento(req,res){
         
 
         con.query(sql_cliente, function (err, cliente, field) {
-            
+            try {
+
+            if (err) throw err;
             if(cliente.rowCount == 0 ){
                 res.status(200).json({
                     message: 'Cliente no encontrado',
@@ -31,8 +33,7 @@ function getDescuento(req,res){
                 });
                 
 
-            }
-            if(cliente.rowCount == 1 ){
+            }else if (cliente.rowCount > 0){
                 res.status(200).json({
                     message: 'Cliente  Encontrado',
                     code: '1'
@@ -66,6 +67,15 @@ function getDescuento(req,res){
                     //console.log(err || data)
                 })
             }
+           
+
+            } catch (error) {
+                res.status(500).json({
+                    message: error.message,
+                    code: '0'
+                });
+            }
+            
         })
 
     
@@ -189,7 +199,8 @@ function getDescuento(req,res){
 
     } else {
         res.status(200).json({
-            message: 'Ingrese una opcion verdadera'
+            message: 'El tipo de documento no existe',
+            code: '0'
         });
     }
     
