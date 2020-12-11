@@ -52,6 +52,8 @@ getSuscripcion = (req, res) => {
       'status': 2,
       'priority': 1
     }
+
+  
     
     var Request = unirest.post(URL_TICKETS);
     
@@ -71,9 +73,6 @@ getSuscripcion = (req, res) => {
           //console.log("X-Request-Id :" + response.headers['x-request-id']);
       }
     });
-
-
-
 
   con.query(sql_suscripcion, function (err, arr, field) {
     try{

@@ -30,32 +30,43 @@ function getListaSuscripciones(req, res) {
     });
   }
 
+
+
   con.query(sql_suscripcion, function (err, suscripciones, field) {
-    if (suscripciones.rowCount == 0) {
-      res.status(200).json({
-        message: "No Tiene suscripcion",
-        code: "0",
-      });
-    } else {
-      let len = suscripciones.rows.length;
-      let message = "";
-      let code = "";
+    
+      try {
+        if (suscripciones.rowCount == 0) {
+          res.status(200).json({
+            message: "No Tiene suscripcion",
+            code: "0",
+          });
+        } else {
+          let len = suscripciones.rows.length;
+          let message = "";
+          let code = "";
 
-      if (len > 0) {
-        for (let i = 0; i < len; i++) {
-          message += `${suscripciones.rows[i].id_suscripcion} > ${suscripciones.rows[i].producto} </br>`;
+          if (len > 0) {
+            for (let i = 0; i < len; i++) {
+              message += `${suscripciones.rows[i].id_suscripcion} > ${suscripciones.rows[i].producto} </br>`;
+            }
+            code = "1";
+          } else {
+            message = "No tiene suscripciones";
+            code = "0";
+          }
+
+          res.status(200).json({
+            message,
+            code,
+          });
         }
-        code = "1";
-      } else {
-        message = "No tiene suscripciones";
-        code = "0";
+      } catch (error) {
+         res.status(500).json({
+            message: error.message,
+            code: '0'
+         });
       }
-
-      res.status(200).json({
-        message,
-        code,
-      });
-    }
+    
   });
 }
 
