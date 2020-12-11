@@ -30,12 +30,10 @@ function getListaSuscripciones(req,res){
             }
             if(suscripciones.rowCount == 1 ){
                 res.status(200).json({
-                    id_suscripcion: suscripciones.rows[0]['id_suscripcion'],
-                    producto: suscripciones.rows[0]['producto'],
-                    periodo: suscripciones.rows[0]['periodo']
+                    data: suscripciones.rows
                 });
             }
-        })
+        });
 
     
     
