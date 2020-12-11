@@ -202,7 +202,7 @@ function getDescuento(req,res){
 
     } else {
         res.status(200).json({
-            data: 'El numero de documento identificado no es correcto'
+            message: 'El numero de documento identificado no es correcto'
         });
     }
     
