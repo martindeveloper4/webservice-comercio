@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
 
-const valicacionSuscriptorCtrl = require('./src/controllers/api_valicacion_suscriptor');
+const validacionSuscriptorCtrl = require('./src/controllers/api_validacion_suscriptor');
 const paquetesCtrl = require('./src/controllers/api_info_paquete');
 const listaSuscripcionesCtrl = require('./src/controllers/api_info_suscripciones');
 
@@ -37,12 +37,12 @@ app.use((req, res, next) => {
 
 
 /* RUTAS DE ACCESO A LOS SERVICIOS */
-app.post('/api/validarsuscriptor',valicacionSuscriptorCtrl.getValicacionSuscriptor);
+app.post('/api/validarsuscriptor',validacionSuscriptorCtrl.getValidacionSuscriptor);
 app.post('/api/lista-suscripciones',listaSuscripcionesCtrl.getListaSuscripciones);
 app.post('/api/info-paquetes',paquetesCtrl.getPaquetes);
 
 
-app.get('/api/validarsuscriptor',valicacionSuscriptorCtrl.getValicacionSuscriptor);
+app.get('/api/validarsuscriptor',validacionSuscriptorCtrl.getValidacionSuscriptor);
 app.get('/api/lista-suscripciones',listaSuscripcionesCtrl.getListaSuscripciones);
 app.get('/api/info-paquetes',paquetesCtrl.getPaquetes);
 
