@@ -18,9 +18,10 @@ function getDescuento(req,res){
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
 
-    var nro_document = req.body.nro_documento  ||  req.query.nro_documento;
 
-    if (nro_document.length == 8) {
+
+    if (parseInt(nro_document.length) == 8) {
+        var nro_document = req.body.nro_documento  ||  req.query.nro_documento;
 
         var sql_cliente = "SELECT ";    
         sql_cliente+="nrodni, ";
@@ -79,8 +80,8 @@ function getDescuento(req,res){
     
         return false;
 
-    } else if (nro_document.length == 9) {
-
+    } else if (parseInt(nro_document.length) == 9) {
+        var nro_document = req.body.nro_documento  ||  req.query.nro_documento;
         var sql_cliente = "SELECT ";    
         sql_cliente+="nrocarnetextranjeria, ";
         sql_cliente+="nombre, ";
@@ -139,7 +140,9 @@ function getDescuento(req,res){
     
         return false;
 
-    } else if (nro_document.length == 11) {
+    } else if (parseInt(nro_document.length) == 11) {
+        
+        var nro_document = req.body.nro_documento  ||  req.query.nro_documento;
 
         var sql_cliente = "SELECT ";    
         sql_cliente+="nroruc, ";
@@ -162,7 +165,7 @@ function getDescuento(req,res){
             }
             if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    message: 'Puede ver sus descuento de suscriptor en el siguiente link:',
+                    message: 'Puede ver sus descuento de suscriptor en el siguiente link ',
                     code: '1'
                 });
 
