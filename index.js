@@ -20,8 +20,9 @@ app.use(bodyParser.json());
 
 
 const validacionSuscriptorCtrl = require('./src/controllers/api_validacion_suscriptor');
-const paquetesCtrl = require('./src/controllers/api_info_paquete');
 const listaSuscripcionesCtrl = require('./src/controllers/api_info_suscripciones');
+const paquetesCtrl = require('./src/controllers/api_info_paquete');
+const descuentoCtrl = require('./src/controllers/api_info_descuento');
 
 
 
@@ -35,16 +36,17 @@ app.use((req, res, next) => {
 });
 
 
-
 /* RUTAS DE ACCESO A LOS SERVICIOS */
 app.post('/api/validarsuscriptor',validacionSuscriptorCtrl.getValidacionSuscriptor);
-app.post('/api/listasuscripciones',listaSuscripcionesCtrl.getListaSuscripciones);
+app.post('/api/lista-suscripciones',listaSuscripcionesCtrl.getListaSuscripciones);
 app.post('/api/info-paquetes',paquetesCtrl.getPaquetes);
+app.post('/api/info-descuentos',descuentoCtrl.getDescuento);
 
 
 app.get('/api/validarsuscriptor',validacionSuscriptorCtrl.getValidacionSuscriptor);
 app.get('/api/lista-suscripciones',listaSuscripcionesCtrl.getListaSuscripciones);
 app.get('/api/info-paquetes',paquetesCtrl.getPaquetes);
+app.get('/api/info-descuentos',descuentoCtrl.getDescuento);
 
 
 

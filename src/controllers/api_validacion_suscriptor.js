@@ -2,13 +2,6 @@
 const con = require('../conexion/conexion');
 //var Freshdesk = require('freshdesk-api');
 //var freshdesk = new Freshdesk('https://newaccount1607623402324.freshdesk.com', 'RMO0bnVkex7LQ1VEfj8x');
-/*
- CONSULTAS 
-SP-04 --> Consulta Informativa General de Paquete
-SP-07 --> Consulta Monto de Pago
-SP-08 --> Consulta de Fecha de Renovacion de Pago
-SP-11 --> Consulta de Pago Cancelado
-*/
 
 
 // Consumo de la API de FRESHDESK con su APIKEY, para generar ticket

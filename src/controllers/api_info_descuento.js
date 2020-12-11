@@ -13,39 +13,27 @@ SP-11 --> Consulta de Pago Cancelado
 
 // Consumo de la API de FRESHDESK con su APIKEY, para generar ticket
 // SERVICIO DE CONSULTA INFORMATIVA GENERAL DE PAQUETE DEL SUSCRIPTOR
-function getPaquetes(req,res){    
+function getDescuento(req,res){    
     /**
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
 
-    
     var nro_document = req.body.nro_documento;
-    var idsuscriptor = req.body.idsuscripcion;
-
 
     if (nro_document.length == 8) {
-        console.log(nro_document.length);
-        var sql_paquete = "SELECT ";    
-        sql_paquete+="sus.producto, ";
-        sql_paquete+="sus.pagomensual, ";
-        sql_paquete+="sus.periodo, ";
-        sql_paquete+="sus.diasentregadiario, ";
-        sql_paquete+="sus.importepagopendiente, ";
-        sql_paquete+="sus.fechasiguienterenovacion, ";
-        sql_paquete+="sus.fechaultimopagocancelado, ";
-        sql_paquete+="sus.importeultimopagocancelado, ";
-        sql_paquete+="cli.nrodni, ";
-        sql_paquete+="cli.nombre, ";
-        sql_paquete+="cli.nrodelivery, ";
-        sql_paquete+="cli.correo ";
-        sql_paquete+="FROM suscripcion sus ";
-        sql_paquete+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-        sql_paquete+="WHERE sus.id_suscripcion="+ idsuscriptor +" AND cli.nrodni="+nro_document;
+
+        var sql_cliente = "SELECT ";    
+        sql_cliente+="nrodni, ";
+        sql_cliente+="nombre, ";
+        sql_cliente+="nrodelivery, ";
+        sql_cliente+="correo ";
+        sql_cliente+="FROM cliente ";
+        sql_cliente+="WHERE nrodni="+nro_document;
         
 
-        con.query(sql_paquete, function (err, paquetes, field) {
-            console.log(paquetes.rowCount);
-            if(paquetes.rowCount == 0 ){
+        con.query(sql_cliente, function (err, cliente, field) {
+            console.log(cliente.rowCount);
+            if(cliente.rowCount == 0 ){
                 res.status(200).json({
                     message: 'No cuenta con ningun paquete de suscripcion actualmente',
                     code: '0'
@@ -53,18 +41,18 @@ function getPaquetes(req,res){
                 
 
             }
-            if(paquetes.rowCount == 1 ){
+            if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    data: paquetes.rows
+                    data: cliente.rows
                 });
 
-                var dnis = paquetes.rows[0]['nrodni'];
+                var dnis = cliente.rows[0]['nrodni'];
                 console.log(dnis);
-                var nombre = paquetes.rows[0]['nombre'];
+                var nombre = cliente.rows[0]['nombre'];
                 console.log(nombre);
-                var nrodelivery = paquetes.rows[0]['nrodelivery'];
+                var nrodelivery = cliente.rows[0]['nrodelivery'];
                 console.log(nrodelivery);
-                var correo = paquetes.rows[0]['correo'];
+                var correo = cliente.rows[0]['correo'];
                 console.log(correo);
 
                 
@@ -94,27 +82,18 @@ function getPaquetes(req,res){
 
     } else if (nro_document.length == 9) {
 
-        var sql_paquete = "SELECT ";
-        sql_paquete+="sus.producto, ";
-        sql_paquete+="sus.pagomensual, ";
-        sql_paquete+="sus.periodo, ";
-        sql_paquete+="sus.diasentregadiario, ";
-        sql_paquete+="sus.importepagopendiente, ";
-        sql_paquete+="sus.fechasiguienterenovacion, ";
-        sql_paquete+="sus.fechaultimopagocancelado, ";
-        sql_paquete+="sus.importeultimopagocancelado, ";
-        sql_paquete+="cli.nrocarnetextranjeria, ";
-        sql_paquete+="cli.nombre, ";
-        sql_paquete+="cli.nrodelivery, ";
-        sql_paquete+="cli.correo ";
-        sql_paquete+="FROM suscripcion sus ";
-        sql_paquete+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-        sql_paquete+="WHERE sus.id_suscripcion="+ idsuscriptor +" AND cli.nroruc="+nro_document;
+        var sql_cliente = "SELECT ";    
+        sql_cliente+="nrocarnetextranjeria, ";
+        sql_cliente+="nombre, ";
+        sql_cliente+="nrodelivery, ";
+        sql_cliente+="correo ";
+        sql_cliente+="FROM cliente ";
+        sql_cliente+="WHERE nrocarnetextranjeria="+nro_document;
         
 
-        con.query(sql_paquete, function (err, paquetes, field) {
-            console.log(paquetes.rowCount);
-            if(paquetes.rowCount == 0 ){
+        con.query(sql_cliente, function (err, cliente, field) {
+            console.log(cliente.rowCount);
+            if(cliente.rowCount == 0 ){
                 res.status(200).json({
                     message: 'No cuenta con ningun paquete de suscripcion actualmente',
                     code: '0'
@@ -122,18 +101,18 @@ function getPaquetes(req,res){
                 
 
             }
-            if(paquetes.rowCount == 1 ){
+            if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    data: paquetes.rows
+                    data: cliente.rows
                 });
 
                 var nrocarnetextranjeria = paquetes.rows[0]['nrocarnetextranjeria'];
-                console.log(nrocarnetextranjeria);
-                var nombre = paquetes.rows[0]['nombre'];
+                console.log(dnis);
+                var nombre = cliente.rows[0]['nombre'];
                 console.log(nombre);
-                var nrodelivery = paquetes.rows[0]['nrodelivery'];
+                var nrodelivery = cliente.rows[0]['nrodelivery'];
                 console.log(nrodelivery);
-                var correo = paquetes.rows[0]['correo'];
+                var correo = cliente.rows[0]['correo'];
                 console.log(correo);
 
                 
@@ -149,7 +128,7 @@ function getPaquetes(req,res){
                     name: nombre,
                     email: correo,
                     subject: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
-                    description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
+                    description: 'CONSULTA DESCUENTOS Y PROMOCIONES',
                     status: 0,
                     priority: 1
                 }, function (err, data) {
@@ -159,31 +138,22 @@ function getPaquetes(req,res){
         })
 
     
-        return false;;
+        return false;
 
     } else if (nro_document.length == 11) {
 
-        var sql_paquete = "SELECT ";
-        sql_paquete+="sus.producto, ";
-        sql_paquete+="sus.pagomensual, ";
-        sql_paquete+="sus.periodo, ";
-        sql_paquete+="sus.diasentregadiario, ";
-        sql_paquete+="sus.importepagopendiente, ";
-        sql_paquete+="sus.fechasiguienterenovacion, ";
-        sql_paquete+="sus.fechaultimopagocancelado, ";
-        sql_paquete+="sus.importeultimopagocancelado, ";
-        sql_paquete+="cli.nroruc, ";
-        sql_paquete+="cli.nombre, ";
-        sql_paquete+="cli.nrodelivery, ";
-        sql_paquete+="cli.correo ";
-        sql_paquete+="FROM suscripcion sus ";
-        sql_paquete+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-        sql_paquete+="WHERE sus.id_suscripcion="+ idsuscriptor +" AND cli.nroruc="+nro_document;
+        var sql_cliente = "SELECT ";    
+        sql_cliente+="nroruc, ";
+        sql_cliente+="nombre, ";
+        sql_cliente+="nrodelivery, ";
+        sql_cliente+="correo ";
+        sql_cliente+="FROM cliente ";
+        sql_cliente+="WHERE nroruc="+nro_document;
         
 
-        con.query(sql_paquete, function (err, paquetes, field) {
-            console.log(paquetes.rowCount);
-            if(paquetes.rowCount == 0 ){
+        con.query(sql_cliente, function (err, cliente, field) {
+            console.log(cliente.rowCount);
+            if(cliente.rowCount == 0 ){
                 res.status(200).json({
                     message: 'No cuenta con ningun paquete de suscripcion actualmente',
                     code: '0'
@@ -191,18 +161,18 @@ function getPaquetes(req,res){
                 
 
             }
-            if(paquetes.rowCount == 1 ){
+            if(cliente.rowCount == 1 ){
                 res.status(200).json({
-                    data: paquetes.rows
+                    message: 'Puede ver sus descuento de suscriptor en el siguiente link: '
                 });
 
-                var nroruc = paquetes.rows[0]['nroruc'];
+                var nroruc = cliente.rows[0]['nroruc'];
                 console.log(dnis);
-                var nombre = paquetes.rows[0]['nombre'];
+                var nombre = cliente.rows[0]['nombre'];
                 console.log(nombre);
-                var nrodelivery = paquetes.rows[0]['nrodelivery'];
+                var nrodelivery = cliente.rows[0]['nrodelivery'];
                 console.log(nrodelivery);
-                var correo = paquetes.rows[0]['correo'];
+                var correo = cliente.rows[0]['correo'];
                 console.log(correo);
 
                 
@@ -217,8 +187,8 @@ function getPaquetes(req,res){
                 freshdesk.createTicket({
                     name: nombre,
                     email: correo,
-                    subject: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
-                    description: 'CONSULTA INFORMATIVA GENERAL DE PAQUETE',
+                    subject: 'CONSULTA DESCUENTOS Y PROMOCIONESE',
+                    description: 'CONSULTA DESCUENTOS Y PROMOCIONES',
                     status: 0,
                     priority: 1
                 }, function (err, data) {
@@ -241,7 +211,7 @@ function getPaquetes(req,res){
 
 
 module.exports = {
-	getPaquetes,
+	getDescuento,
 }
 
 

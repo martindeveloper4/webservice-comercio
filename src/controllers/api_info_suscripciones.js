@@ -18,17 +18,17 @@ function getListaSuscripciones(req,res){
         
         
         con.query(sql_suscripcion, function (err, suscripciones, field) {
-
+            console.log(suscripciones);
             if(suscripciones){
 
                 res.status(200).json({
                     data: suscripciones.rows
                 });
         
-
+                return false;
             }else{
            
-                res.status(200).json({
+                res.json({
                     message: 'No tiene ninguna suscripcion'
   
                 });
