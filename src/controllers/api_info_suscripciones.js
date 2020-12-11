@@ -21,7 +21,13 @@ function getListaSuscripciones(req, res) {
     sql_suscripcion += " AND cli.nrocarnetextranjeria=" + nro_document;
   } else if (tipo_document == 3) {
     sql_suscripcion += " AND cli.nroruc=" + nro_document;
+  } else {
+    return res.status(200).json({
+      message: "No existe el tipo de documento",
+      code: "0",
+    });
   }
+
   con.query(sql_suscripcion, function (err, suscripciones, field) {
     if (suscripciones.rowCount == 0) {
       res.status(200).json({
