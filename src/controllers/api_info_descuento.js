@@ -199,7 +199,7 @@ function getDescuento(req,res){
 
     } else {
         res.status(200).json({
-            message: 'El tipo de documento no existe',
+            message: 'El tipo de documento no existe'+nro_document + ' tipo: '+tipo_document,
             code: '0'
         });
     }
