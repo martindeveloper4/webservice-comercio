@@ -1,14 +1,17 @@
-'use strict'
+'use strict';
 const con = require('../conexion/conexion');
 
 
 function getListaSuscripciones(req,res){
-        var nro_document =  req.body.nro_documento;
-        console.log(nro_document);
-        var id_subcategoria = req.body.subcategoria;
-        console.log(id_subcategoria);
-        var id_subcategoria_one =  Number(id_subcategoria);
-        console.log(id_subcategoria_one);
+        let nro_document =  req.body.nro_documento;
+        //console.log(typeof nro_document);
+        //console.log(nro_document);
+
+
+        let id_subcategoria = req.body.subcategoria;
+        //console.log(typeof id_subcategoria);
+        //console.log(id_subcategoria);
+        
 
         
         if (nro_document.length == 8) {
@@ -19,7 +22,7 @@ function getListaSuscripciones(req,res){
             sql_suscripcion+="sus.periodo ";
             sql_suscripcion+="FROM suscripcion sus ";
             sql_suscripcion+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria_one+ " AND cli.nrodni="+nro_document;
+            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria+ " AND cli.nrodni="+nro_document;
             
             
             con.query(sql_suscripcion, function (err, suscripciones, field) {
@@ -51,7 +54,7 @@ function getListaSuscripciones(req,res){
             sql_suscripcion+="sus.periodo ";
             sql_suscripcion+="FROM suscripcion sus ";
             sql_suscripcion+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria_one+ " AND cli.nrocarnetextranjeria="+nro_document;
+            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria+ " AND cli.nrocarnetextranjeria="+nro_document;
             
             
             con.query(sql_suscripcion, function (err, suscripciones, field) {
@@ -83,7 +86,7 @@ function getListaSuscripciones(req,res){
             sql_suscripcion+="sus.periodo ";
             sql_suscripcion+="FROM suscripcion sus ";
             sql_suscripcion+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria_one+ " AND cli.nroruc="+nro_document;
+            sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria+ " AND cli.nroruc="+nro_document;
             
             
             con.query(sql_suscripcion, function (err, suscripciones, field) {
@@ -113,12 +116,6 @@ function getListaSuscripciones(req,res){
         });
     }
 
-
-
-
-        
-
-    
     
 
 }
