@@ -17,12 +17,12 @@ function getPaquetes(req,res){
     /**
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
-    var tipo_doc = req.body.tipo_documento;
-    var nrodoc =  req.body.dni;
-    var tip_suscripcion = req.body.tipo_suscripcion;
+    var nro_documento = req.body.nro_documento;
+    var tipo_documento = req.body.tipo_documento;
+    var tipo_suscripcion = req.body.tipo_suscripcion;
 
 
-    if (tipo_doc == 1) {
+    if (tipo_documento == 1) {
 
         var sql_paquete = "SELECT ";
         sql_paquete+="sus.producto, ";
@@ -39,7 +39,7 @@ function getPaquetes(req,res){
         sql_paquete+="cli.correo ";
         sql_paquete+="FROM suscripcion sus ";
         sql_paquete+="INNER JOIN cliente cli ON cli.id = sus.idcliente ";
-        sql_paquete+="WHERE sus.id_grupo="+ tip_suscripcion +" AND cli.nrodni="+nrodoc;
+        sql_paquete+="WHERE sus.id_grupo="+ tipo_suscripcion +" AND cli.nrodni="+nro_documento;
         
 
         con.query(sql_paquete, function (err, paquetes, field) {
@@ -91,9 +91,9 @@ function getPaquetes(req,res){
     
         return false;
 
-    } else if (tipo_doc == 2) {
+    } else if (tipo_documento == 2) {
 
-        var sql_cliente = "SELECT *from cliente where nrocarnetextranjera="+nrodoc;
+        var sql_cliente = "SELECT *from cliente where nrocarnetextranjera="+nro_documento;
         
 
         con.query(sql_cliente, function (err, cliente, field) {
@@ -115,9 +115,9 @@ function getPaquetes(req,res){
         });
         return false;
 
-    } else if (tipo_doc == 3) {
+    } else if (tipo_documento == 3) {
 
-        var sql_cliente = "SELECT *from cliente where nroruc="+nrodoc;
+        var sql_cliente = "SELECT *from cliente where nroruc="+nro_documento;
         
 
         con.query(sql_cliente, function (err, cliente, field) {

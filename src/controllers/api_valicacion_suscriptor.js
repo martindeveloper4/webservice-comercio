@@ -13,17 +13,17 @@ SP-11 --> Consulta de Pago Cancelado
 
 // Consumo de la API de FRESHDESK con su APIKEY, para generar ticket
 // SERVICIO DE CONSULTA INFORMATIVA GENERAL DE PAQUETE DEL SUSCRIPTOR
-function getValicacionSuscriptor(req,res){    
+function getValicacionSuscriptor(req,res){
     /**
      * Consulta a la base de datos de la tabla SUSCRIPCION
     */
-    var nrodoc =  req.body.dni;
-    var tipo_doc = req.body.tipo_documento;
+    var nro_documento =  req.body.nro_documento;
+    var tipo_documento = req.body.tipo_documento;
 
 
-    if (tipo_doc == 1) {
+    if (tipo_documento == 1) {
 
-        var sql_cliente = "SELECT *from cliente where nrodni="+nrodoc;
+        var sql_cliente = "SELECT *from cliente1 where nrodni="+nro_documento;
         
 
         con.query(sql_cliente, function (err, cliente, field) {
@@ -47,10 +47,10 @@ function getValicacionSuscriptor(req,res){
     
         return false;
 
-    } else if (tipo_doc == 2) {
+    } else if (tipo_documento == 2) {
 
-        var sql_cliente = "SELECT *from cliente where nrocarnetextranjera="+nrodoc;
-        
+        var sql_cliente = "SELECT *from cliente1 where nrocarnetextranjeria="+nro_documento;
+                                                                                
 
         con.query(sql_cliente, function (err, cliente, field) {
             
@@ -59,8 +59,7 @@ function getValicacionSuscriptor(req,res){
                     message: 'Cliente no encontrado',
                     code: '0'
                 });
-                
-
+            
             }
             if(cliente.rowCount == 1 ){
                 res.status(200).json({
@@ -71,9 +70,9 @@ function getValicacionSuscriptor(req,res){
         });
         return false;
 
-    } else if (tipo_doc == 3) {
+    } else if (tipo_documento == 3) {
 
-        var sql_cliente = "SELECT *from cliente where nroruc="+nrodoc;
+        var sql_cliente = "SELECT *from cliente1 where nroruc="+nro_documento;
         
 
         con.query(sql_cliente, function (err, cliente, field) {
