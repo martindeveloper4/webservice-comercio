@@ -53,7 +53,15 @@ function getPaquetes(req,res){
             }
             if(paquetes.rowCount == 1 ){
                 res.status(200).json({
-                    data: paquetes.rows
+                    producto: paquetes.rows[0]['producto'],
+                    pagomensual: paquetes.rows[0]['pagomensual'],
+                    periodo: paquetes.rows[0]['periodo'],
+                    diasentregadiario: paquetes.rows[0]['diasentregadiario'],
+                    importepagopendiente: paquetes.rows[0]['importepagopendiente'],
+                    fechasiguienterenovacion: paquetes.rows[0]['fechasiguienterenovacion'],
+                    fechaultimopagocancelado: paquetes.rows[0]['fechaultimopagocancelado'],
+                    importeultimopagocancelado: paquetes.rows[0]['importeultimopagocancelado'],
+                    code:'1'
                 });
 
                 var dnis = paquetes.rows[0]['nrodni'];
