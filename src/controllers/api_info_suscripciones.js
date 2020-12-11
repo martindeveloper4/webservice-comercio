@@ -14,7 +14,7 @@ function getListaSuscripciones(req,res){
         sql_suscripcion+="sus.periodo ";
         sql_suscripcion+="FROM suscripcion sus ";
         sql_suscripcion+="INNER JOIN cliente cli ON cli.id_cliente = sus.id_cliente ";
-        sql_suscripcion+="WHERE sus.id_subcategoria="+ id_subcategoria +" AND cli.nrodni="+nro_document;
+        sql_suscripcion+="WHERE sus.id_subcategoria=" +id_subcategoria+ " AND cli.nrodni="+nro_document;
         
         
 

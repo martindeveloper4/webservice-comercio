@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 /* RUTAS DE ACCESO A LOS SERVICIOS */
 app.post('/api/validarsuscriptor',validacionSuscriptorCtrl.getValidacionSuscriptor);
-app.post('/api/lista-suscripciones',listaSuscripcionesCtrl.getListaSuscripciones);
+app.post('/api/listasuscripciones',listaSuscripcionesCtrl.getListaSuscripciones);
 app.post('/api/info-paquetes',paquetesCtrl.getPaquetes);
 
 
