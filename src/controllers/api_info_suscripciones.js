@@ -74,7 +74,7 @@ function getListaSuscripciones(req,res){
 
                 if(suscripciones.rowCount == 0){
                     res.status(200).json({
-                        message: 'Tiene suscripcion',
+                        message: 'No Tiene suscripcion',
                         code: '0'
                     });
             
