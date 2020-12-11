@@ -6,9 +6,9 @@ function getListaSuscripciones(req,res){
 
     console.log(req.body);
 
-    var id_subcategoria = req.body.subcategoria;
     let nro_document =  req.body.nro_documento;
     let tipo_document = req.body.tipo_documento;
+    var id_subcategoria = req.body.subcategoria;
 
 
     //let id_subcategory = parseInt(id_subcategoria);
