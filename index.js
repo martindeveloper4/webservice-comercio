@@ -65,6 +65,7 @@ app.get("/api/suscripciones/:id", suscripcionCtrl.getSuscripcion);
 app.get("/api/validar-suscripciones", suscripcionCtrl.validarEstadoSuscripcion);
 app.get("/api/anulacion-suscripcion", suscripcionCtrl.validateCancellation);
 app.get("/api/beneficarios-suscripcion", suscripcionCtrl.getBeneficiarios);
+app.get("/api/suscripciones-pq", suscripcionCtrl.getSuscripcionesPQ);
 app.get("/api/consulta-pq", suscripcionCtrl.consultaPQ);
 
 app.post("/api/usuario/registrar", userCtrl.registerUser);

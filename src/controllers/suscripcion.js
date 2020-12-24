@@ -45,6 +45,40 @@ getSuscripciones = (req, res) => {
   });
 };
 
+getSuscripcionesPQ = (req, res) => {
+  let token = req.body.token || req.query.token || req.params.token;
+
+  let sql = `SELECT 
+                  s.id_suscripcion,
+                  s.producto,
+                  s.pagomensual,
+                  s.periodo,
+                  s.diasentregadiario,
+                  s.importepagopendiente,
+                  s.fechasiguienterenovacion,
+                  s.fechaultimopagocancelado,
+                  s.importeultimopagocancelado
+                  FROM suscripcion s
+                  INNER JOIN cliente c ON c.id_cliente = s.id_cliente
+                  INNER JOIN subcategoria isc ON isc.id_subcategoria = s.id_subcategoria
+                  INNER JOIN categoria cat ON cat.id_categoria = isc.id_categoria 
+                  WHERE c.token='${token}' AND cat.id_categoria=3`;
+
+  con.query(sql, function (err, arr, field) {
+    if (arr.rowCount > 0) {
+      res.status(200).json({
+        message: arr.rows,
+        code: "1",
+      });
+    } else {
+      res.status(200).json({
+        message: "No Tiene suscripcion",
+        code: "0",
+      });
+    }
+  });
+};
+
 getSuscripcion = (req, res) => {
   let id = req.query.id || req.body.id || req.params.id;
   let token = req.body.token || req.query.token;
@@ -241,13 +275,15 @@ consultaPQ = (req, res) => {
               s.periodo,
               s.diasentregadiario,
               s.importepagopendiente,
-              s.fechasiguienterenovacion,
-              s.fechaultimopagocancelado,
+              to_char(fechasiguienterenovacion,'DD/MM/YYYY') fechaSiguienteRenovacion,
+              to_char(fechaultimopagocancelado,'DD/MM/YYYY') fechaUltimoPagoCancelado,
               c.correoelectronicopq,
               c.estadocorreoelectronicopq
               FROM suscripcion s
               INNER JOIN cliente c ON c.id_cliente=s.id_cliente
-              WHERE id_suscripcion=${id} AND token='${token}`;
+              INNER JOIN subcategoria isc ON isc.id_subcategoria = s.id_subcategoria
+              INNER JOIN categoria cat ON cat.id_categoria = isc.id_categoria
+              WHERE id_suscripcion=${id} AND token='${token}' AND cat.id_categoria=3;`;
 
   con.query(sql, function (err, arr, field) {
     if (arr.rowCount > 0) {
@@ -265,6 +301,7 @@ consultaPQ = (req, res) => {
 };
 
 newTipificacion = (type) => {
+
   let numeroDocuemento = "43979441";
   let nrodelivery = "486061";
 
@@ -277,8 +314,8 @@ newTipificacion = (type) => {
       "', 'CONSULTAS','CONSULTA DE FACTURACION')";
     con.query(sql, function (err, result) {
       if (err) throw err;
-    });
-  } else {
+    }); 
+  }else{
     var sql =
       "INSERT INTO tipificacion_bot (dni,observacion,tipo,estado,nro_delivery,motivo,submotivo) VALUES ('" +
       numeroDocuemento +
@@ -297,5 +334,6 @@ module.exports = {
   validarEstadoSuscripcion,
   validateCancellation,
   getBeneficiarios,
+  getSuscripcionesPQ,
   consultaPQ,
 };
