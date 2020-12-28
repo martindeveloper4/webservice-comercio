@@ -144,7 +144,7 @@ const sendEmail = (res, uuid, correo) => {
   });
 
   const contentHTML = `<h3>Hola</h3>
-												Acceda al siguiente link para activar su cuenta, <a href='http://localhost:4000/usuario/validar?token=${uuid}'>Aquí</a>`;
+												Acceda al siguiente link para activar su cuenta, <a href='https://backendapicomercio.herokuapp.com/usuario/validar?token=${uuid}'>Aquí</a>`;
 
   const mailOptions = {
     from: '"Club El Comercio " <clubelmercio@comercio.com>',
