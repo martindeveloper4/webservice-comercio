@@ -21,7 +21,12 @@ const registerUser = (req, res) => {
       try {
         if (arr.rowCount > 0) {
           let uuid = uuidv4();
-          let sql = `INSERT INTO usuario(username,correo,password,estado,token) values('${username}','${correo}','${password}',0,'${uuid}')`;
+          let nombre = arr.rows[0].nombre;
+          let apellidopaterno = arr.rows[0].apellidopaterno;
+          let apellidomaterno = arr.rows[0].apellidomaterno;
+          let dni = arr.rows[0].nrodni;
+
+          let sql = `INSERT INTO usuario(username,correo,password,estado,token,nombre,apellidopaterno,apellidomaterno,dni) values('${username}','${correo}','${password}',0,'${uuid}','${nombre}','${apellidopaterno}','${apellidomaterno}','${dni}')`;
           con.query(sql, function (err, arr, field) {
             try {
               if (err) throw err;
